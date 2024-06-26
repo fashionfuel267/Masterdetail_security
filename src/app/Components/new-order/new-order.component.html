@@ -1,0 +1,145 @@
+<div>
+<form #form='ngForm' *ngIf='srv.formData' autocomplete="off" (submit)="onsubmit(form)">
+    <div class="row">
+     <div class="col-md-6">
+        <div class="form-group">
+            <label for="title">Order No</label>
+            <input
+              type="text"
+              class="form-control"
+              id="OrderID"
+              required
+              [(ngModel)]="srv.formData.OrderNo"
+              name="OrderID"
+            />
+          </div>
+          <div class="form-group">
+            <label for="description">Total</label>
+            <input
+              class="form-control"
+              id="Total" readonly
+              required
+              [(ngModel)]="srv.formData.TotalPrice"
+              name="TotalPrice"
+            />
+          </div>
+     </div>
+     
+  
+     <div class="col-md-6">
+        <div class="form-group col-md-6">
+            <label>Customer </label>
+            <div class="input-group">
+                    <div class="input-group-prepend">
+                            <!-- <div class="input-group-text">
+                                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                            </div> -->
+                            
+                            <select name="CusID" #CusID="ngModel"
+                                     
+                                    [(ngModel)]="srv.formData.CusID"
+                                    class="form-control">
+                                    <option value="">Select customer</option>
+                                    @for (item of custList; track item.Id; let i = $index)
+                                    {<option 
+                                            value="{{item.Id}}">
+                                            {{item.Name}}
+                                    </option>
+                                    }
+                                    
+                            </select>
+    
+                    </div>
+    
+            </div>
+    
+    </div>
+    <div class="form-group col-md-6">
+        <label>PMethod</label>
+
+        <select name="Paymethod" #Paymethod="ngModel" [(ngModel)]="srv.formData.Paymethod"
+               
+                class="form-control">
+                <option value="">Select Payment Method</option>
+                <option value="Cash">Cash</option>
+<option value="Card">Card</option>
+        </select>
+</div>
+     </div>
+     
+     <!-- <div class="col-md-12">
+        <button (click)="saveTutorial()" class="btn btn-success mt-5">Submit</button>
+     </div> -->
+     
+     
+    </div>
+ <div class="row mt-10">
+      <!-- Order items -->
+      <div style="widows: 100%">
+        <table class="table table-borderless">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Food</th>
+                        <th>qty</th>
+                        <th>price</th>
+                        <th>Total Price </th>
+                        <th>
+                                <a (click)='addoreditItem(  )'
+                                        class="btn btn-sm btn-success text-white">
+                                        <i class="fa fa-plus">Add</i>
+                                </a>
+                        </th></tr>
+                </thead>
+                <tbody>
+                        <tr *ngIf="srv.orderItems.length==0">
+                                <td colspan="5" class="font-italic text-center"
+                                        [class.text-danger]="!isValid && srv.orderItems.length ==0">
+                                        No food item found for selected order</td>
+                        </tr>
+                        <tr *ngFor='let item of srv.orderItems;let i=index'>
+                                <td>
+                                        {{item.ItemName}}
+                                </td>
+                                <td>
+                                        {{item.Price}}
+                                </td>
+                                <td>
+                                        {{item.Qty}}
+                                </td>
+                                <td>
+                                        {{item.Total}}
+                                </td>
+                                <td>
+                                        <a (click)='addoreditItem(i,order.OrderID)'
+                                                class="btn btn-sm btn-info text-white">
+                                                <!-- <i class="fa fa-pencil"></i> -->
+Edit
+                                        </a>
+                                        <a (click)='deleteItem(item.OrderId,i)'
+                                                class="btn btn-sm btn-danger text-white ml-1">
+                                                <!-- <i class="fa fa-trash"></i> -->
+                                                Delete
+                                        </a>
+                                </td>
+                        </tr>
+                </tbody>
+        </table>
+</div>
+<div class="form-Group">
+
+        <button type="submit" class="btn btn-primary" type="submit">
+                <i class="fa fa-database"></i> Save
+        </button>
+        <a class="btn btn-outline-dark  ml-1 sm-1" routerLink="/orders">
+                <i class="fa fa-table"></i>
+                View OrderList
+        </a>
+
+        <a class="btn btn-outline-dark  ml-1 sm-1" (click)="goToList()">
+                <i class="fa fa-table"></i>
+                Back
+        </a>
+</div>
+ </div>
+</form>
+</div>
